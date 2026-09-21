@@ -5,7 +5,13 @@ Static: one HTML shell, one stylesheet, one script. No build step, no dependenci
 Built from `~/Downloads/design_handoff_wavesbychin_site` (the design source of truth — tokens,
 copy and interactions all come from its README and `Wavesbychin.dc.html`).
 
-## Run it
+## Live
+
+https://aibotvivi.github.io/wavesbychin-site/ — GitHub Pages from the `main` branch root of
+`aibotvivi/wavesbychin-site` (public; a private repo would take the site down on the Free
+plan). Every push to `main` redeploys in about a minute.
+
+## Run it locally
 
 ```bash
 ./serve.sh          # http://localhost:8798
