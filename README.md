@@ -1,6 +1,6 @@
 # Wavesbychin — sound healing site
 
-Marketing site for Wavesbychin, Vivi's London sound healing, reiki, cacao and breathwork practice.
+Marketing site for Wavesbychin, Vivi's East London sound healing, reiki, cacao and breathwork practice.
 Static: one HTML shell, one stylesheet, one script. No build step, no dependencies, no framework.
 Built from `~/Downloads/design_handoff_wavesbychin_site` (the design source of truth — tokens,
 copy and interactions all come from its README and `Wavesbychin.dc.html`).
