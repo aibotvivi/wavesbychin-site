@@ -180,7 +180,7 @@
       '<section class="panel panel--hero">' +
         '<p class="eyebrow">About me</p>' +
         '<h1 class="h1">Hi, I\'m Vivi.</h1>' +
-        '<p class="lead lead--15">I\'m Vivi — a certified sound healing practitioner in Nepal and Reiki Level 2 practitioner based in London.</p>' +
+        '<p class="lead lead--15">I\'m Vivi — a certified sound healing practitioner trained in Nepal and Reiki Level 2 practitioner based in London.</p>' +
       '</section>' +
       photo(PHOTOS.portrait, "34") +
       '<section class="panel panel--wide panel--story story">' +
