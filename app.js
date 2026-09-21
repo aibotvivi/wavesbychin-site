@@ -225,8 +225,9 @@
         '<article class="card offer"><p class="offer__meta">By arrangement</p><h2>Ceremony &amp; private events</h2><p>Weddings, namings, memorials, milestone birthdays, retreat closings. Sound written around the shape of your day, agreed with you beforehand rather than improvised at you.</p></article>' +
       '</section>' +
       '<section class="panel panel--wide panel--center">' +
-        '<p class="lead lead--muted lead--22">Sessions are described here in terms of what happens in the room. They are not treatment, and they are not a substitute for care from a professional.</p>' +
-        '<a class="btn btn--outline btn--wide" href="' + href("moon") + '" data-nav="moon">Moon phase rituals</a>' +
+        '<h2 class="h2 h2--cta">Innerwave</h2>' +
+        '<p class="lead lead--13 lead--cta">A companion project sits alongside the rituals — Innerwave, for tarot and dream reading.</p>' +
+        '<div class="cta-stack"><a class="btn btn--outline btn--block" style="padding:15px" href="' + INNERWAVE + '" target="_blank" rel="noopener">Innerwave ↗</a></div>' +
       '</section>'
     );
   }
