@@ -56,12 +56,20 @@
     { group: "Before you book", items: [
       { q: "What should I expect in a session?", a: "Every session is a little different, but most begin with settling in — some breathwork or a short grounding moment — before moving into sound with Tibetan singing bowls. I often work close to you during the sound healing portion, moving the bowls near your body so you feel the vibration as well as hear it. Some people fall asleep, some feel a deep sense of calm, others feel very little the first time — all of that is normal." },
       { q: "Is this a substitute for medical or mental health treatment?", a: "No. Sound healing, reiki, and cacao ceremony are wellness practices, not medical treatment. If you have a specific health concern, please continue working with your doctor or therapist alongside any sessions with me." },
-      { q: "Are there any health conditions I should mention before booking?", a: "Yes — please let me know in advance if you're pregnant, have epilepsy, have a pacemaker or other implanted medical device, or have had recent surgery, so we can adjust the session appropriately." }
+      { q: "Is sound healing safe for everyone?", a: "<p>Sound healing is gentle and suits most people. However, it is not suitable if any of the following apply to you:</p><ul><li>You're pregnant.</li><li>You have epilepsy or a seizure condition.</li><li>You have a pacemaker, metal implants or have had recent surgery.</li><li>You have tinnitus or sound sensitivity.</li></ul><p>If you're unsure whether sound healing is right for you, please get in touch before booking.</p>" }
     ] },
     { group: "During a session", items: [
       { q: "You mentioned working close to clients during sound healing — what does that involve?", a: "I move the bowls near your body during parts of the session so you can feel the vibration, not just hear it. If you'd prefer more distance, just let me know beforehand — I'm always happy to adjust." },
       { q: "What's included in a cacao ceremony?", a: "Cacao ceremonies are a slower, more ceremonial experience — often paired with intention-setting, breathwork, or sound." },
       { q: "Can I request specific elements — reiki, chanting, breathwork?", a: "Yes. I shape each session around the group and the time we have, so let me know if there's something you're drawn to or want to include." }
+    ] },
+    { group: "After your session", items: [
+      { q: "What should I do straight after a sound healing session?", a: "Drink plenty of water. Have a big glass straight away, then keep sipping steadily through the rest of the day. It helps you rehydrate and feel grounded after deep relaxation." },
+      { q: "Why do I feel sleepy or “floaty” afterwards?", a: "Your body has shifted into rest mode, so this is completely normal. Sit for a moment, feel your feet on the floor, drink some water and have a light snack. Plan a quiet evening if you can." },
+      { q: "Is it normal to feel emotional?", a: "Yes. Deep relaxation can bring feelings to the surface. Let them pass without judgement. If something difficult stays with you, reach out to a friend or a qualified professional." },
+      { q: "I didn't feel much. Did it work?", a: "Every session is different. Effects can be subtle or show up later, often as deeper sleep or a calmer next day." },
+      { q: "What should I avoid for the rest of the day?", a: "Keep things gentle. Go easy on alcohol, strong caffeine, heavy meals and screens." },
+      { q: "Can I drive straight after?", a: "Wait at least 10 to 15 minutes. Drink some water and only drive once you feel fully alert." }
     ] },
     { group: "Corporate", items: [
       { q: "Do you offer sessions for teams or offsites?", a: "Yes — I run sound healing sessions for corporate wellness days, offsites, and team wellbeing weeks. Sessions can be adapted for group size and available space." },
@@ -218,7 +226,7 @@
       '</section>' +
       photo(PHOTOS.offerCover, "43") +
       '<section class="panel panel--stack">' +
-        '<article class="card offer"><p class="offer__meta">60 minutes</p><h2>Group Sound Baths</h2><p>The public session. Doors open fifteen minutes early, the room is dim, and you choose a mat. Roughly an hour of continuous sound, then silence, then tea if the venue allows it.</p></article>' +
+        '<article class="card offer"><p class="offer__meta">60 minutes</p><h2>Group Sound Baths</h2><p>The public session. Doors open fifteen minutes early. Roughly an hour of continuous sound, then silence, then tea if the venue allows it.</p></article>' +
         '<article class="card offer"><p class="offer__meta">60 minutes · one person</p><h2>1:1 Sound Healing Sessions</h2><p>Tibetan singing bowl sessions tailored to you, in person or at your space. A short conversation first, then sound played close — bowls placed on and around the body, voice used sparingly. Suited to people who find group rooms distracting.</p></article>' +
         '<article class="card offer"><p class="offer__meta">45–90 minutes · teams</p><h2>Corporate Wellness Sessions</h2><p>Sound healing brought into offsites, wellness weeks and team days. A brief framing of what sound is and isn\'t, the session itself, and space for questions afterwards. Mats and instruments travel with me.</p>' +
           '<button class="textbtn" type="button" data-action="corporate-inquiry">Corporate inquiries →</button></article>' +
@@ -386,7 +394,7 @@
           '<button class="faq__btn" type="button" data-action="faq" data-i="' + n + '" aria-expanded="' + open + '">' +
             '<span class="faq__q">' + it.q + '</span><span class="faq__sign" aria-hidden="true">' + (open ? "–" : "+") + '</span>' +
           '</button>' +
-          '<p class="faq__a">' + it.a + '</p>' +
+          '<div class="faq__a">' + it.a + '</div>' +
         '</div>';
       }).join("");
       return '<section class="panel"><h2 class="h2 h2--faq">' + g.group + '</h2><div class="stack stack--12">' + items + '</div></section>';

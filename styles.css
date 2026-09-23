@@ -622,6 +622,9 @@ select.ctl { appearance: auto; }
 .faq__sign { font-size: 18px; color: var(--muted); line-height: 1; }
 .faq__a { display: none; margin: 14px 0 0; font-size: 13px; color: var(--body); }
 .faq.is-open .faq__a { display: block; }
+.faq__a p, .faq__a ul { margin: 0 0 10px; }
+.faq__a ul { padding-left: 18px; }
+.faq__a > :last-child { margin-bottom: 0; }
 
 /* ---------- footer ---------- */
 
