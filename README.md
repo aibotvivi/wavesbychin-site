@@ -74,8 +74,10 @@ the anon key (read returns `[]`, an off-shape insert gets 401).
 
 Read submissions at https://supabase.com/dashboard/project/wkkyoszrdontvziehaku/editor
 (Table editor → `inquiries`). Rows 1–2 are the build's test submissions, safe to delete.
-For an email on each new row, add a Database Webhook on INSERT pointing at Zapier / Make /
-Resend — not built. The key in `config.js` is the **anon** key; never put `service_role` there.
+**Alerts:** `supabase/inquiry-alerts.sql` adds an INSERT trigger that sends each new row to
+Telegram via `pg_net`, with the bot token and chat id held in Supabase Vault (fill them in
+inside the SQL editor only — this repo is public). It is capped at 10 alerts per ten
+minutes and never blocks the insert. Run it once after `inquiries.sql`. The key in `config.js` is the **anon** key; never put `service_role` there.
 
 Rows carry `kind` (`message` | `subscribe`), the form fields, `page` (the hash route it was
 sent from) and `source = 'wavesbychin-site'`.
