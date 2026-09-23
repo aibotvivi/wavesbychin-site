@@ -218,7 +218,7 @@
       '</section>' +
       photo(PHOTOS.offerCover, "43") +
       '<section class="panel panel--stack">' +
-        '<article class="card offer"><p class="offer__meta">75 minutes · up to 30 people</p><h2>Group Sound Baths</h2><p>The public session. Doors open fifteen minutes early, the room is dim, and you choose a mat. Roughly an hour of continuous sound, then silence, then tea if the venue allows it.</p></article>' +
+        '<article class="card offer"><p class="offer__meta">60 minutes</p><h2>Group Sound Baths</h2><p>The public session. Doors open fifteen minutes early, the room is dim, and you choose a mat. Roughly an hour of continuous sound, then silence, then tea if the venue allows it.</p></article>' +
         '<article class="card offer"><p class="offer__meta">60 minutes · one person</p><h2>1:1 Sound Healing Sessions</h2><p>Tibetan singing bowl sessions tailored to you, in person or at your space. A short conversation first, then sound played close — bowls placed on and around the body, voice used sparingly. Suited to people who find group rooms distracting.</p></article>' +
         '<article class="card offer"><p class="offer__meta">45–90 minutes · teams</p><h2>Corporate Wellness Sessions</h2><p>Sound healing brought into offsites, wellness weeks and team days. A brief framing of what sound is and isn\'t, the session itself, and space for questions afterwards. Mats and instruments travel with me.</p>' +
           '<button class="textbtn" type="button" data-action="corporate-inquiry">Corporate inquiries →</button></article>' +
