@@ -32,7 +32,6 @@
     corporateCap: 20,        // people included in the corporate price
     corporateExtra: "£150",  // each extra session the same day
     ceremony: "£400",
-    travelZones: "1–3",      // travel included within these London zones
     insurer: "Balens",
     publicLiability: "£5m",
     indemnity: "£1m"
@@ -90,10 +89,10 @@
     ] },
     { group: "Corporate", items: [
       { q: "Do you offer sessions for teams or offsites?", a: "Yes — I run sound healing sessions for corporate wellness days, offsites, and team wellbeing weeks. Sessions can be adapted for group size and available space." },
-      { q: "Do you travel to our office/venue?", a: "Yes. Travel within London zones " + RATES.travelZones + " is included in the price. Further out, a travel fee is quoted before you book." }
+      { q: "Do you travel to our office/venue?", a: "Yes. Travel is charged on top of the session price, based on distance from East London, and quoted before you book." }
     ] },
     { group: "Booking & practical", items: [
-      { q: "How much does it cost?", a: "<ul><li>Group sound bath: " + RATES.group + " per person.</li><li>1:1 session: from " + RATES.oneToOne + " at a studio, from " + RATES.home + " at your home.</li><li>Corporate session: from " + RATES.corporate + " for up to " + RATES.corporateCap + " people, " + RATES.corporateExtra + " for each extra session on the same day.</li><li>Ceremony and private events: from " + RATES.ceremony + ".</li></ul><p>Travel within London zones " + RATES.travelZones + " is included. Further out, a travel fee is quoted before you book. No VAT is charged.</p>" },
+      { q: "How much does it cost?", a: "<ul><li>Group sound bath: " + RATES.group + " per person.</li><li>1:1 session: from " + RATES.oneToOne + " at a studio, from " + RATES.home + " at your home.</li><li>Corporate session: from " + RATES.corporate + " for up to " + RATES.corporateCap + " people, " + RATES.corporateExtra + " for each extra session on the same day.</li><li>Ceremony and private events: from " + RATES.ceremony + ".</li></ul><p>Prices don't include travel. For sessions at your home, office or venue, a travel fee based on distance from East London is added and quoted before you book. No VAT is charged.</p>" },
       RATES.insured && { q: "Are you insured?", a: "Yes. I hold " + RATES.publicLiability + " public liability and " + RATES.indemnity + " professional indemnity cover with " + RATES.insurer + ". A copy of the certificate is available on request." },
       { q: "What's your cancellation policy?", a: "Sessions aren't cancelled, but they can be rescheduled. Let me know as early as you can and we'll find another date that works." },
       { q: "What should I wear or bring?", a: "Comfortable, loose clothing you can relax in. Please bring your own mat, cushion or blanket to lie on." }
@@ -240,7 +239,7 @@
       '<section class="panel panel--hero">' +
         '<p class="eyebrow">What I offer</p>' +
         '<h1 class="h1">A different theme each time.</h1>' +
-        '<p class="lead">Every offering is the same instruments held differently. Prices are starting points, travel within London zones ' + RATES.travelZones + ' is included, and no VAT is charged.</p>' +
+        '<p class="lead">Every offering is the same instruments held differently. Prices are starting points. Travel to your home, office or venue is charged on top and quoted before you book. No VAT is charged.</p>' +
       '</section>' +
       photo(PHOTOS.offerCover, "43") +
       '<section class="panel panel--stack">' +
