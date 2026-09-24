@@ -21,8 +21,10 @@
     ]
   };
 
-  // Prices and insurance. DRAFT: placeholder figures, not yet real. Swap here and every page updates.
+  // Prices and insurance. Prices are set from London market rates (Sep 2026). Swap here and every page updates.
+  // Insurance copy shows only when insured is true — turn it on once the policy is in place.
   var RATES = {
+    insured: false,
     group: "£25",            // per person, public sound bath
     oneToOne: "£80",         // 1:1, at a studio
     home: "£120",            // 1:1, at your home
@@ -92,7 +94,7 @@
     ] },
     { group: "Booking & practical", items: [
       { q: "How much does it cost?", a: "<ul><li>Group sound bath: " + RATES.group + " per person.</li><li>1:1 session: from " + RATES.oneToOne + " at a studio, from " + RATES.home + " at your home.</li><li>Corporate session: from " + RATES.corporate + " for up to " + RATES.corporateCap + " people, " + RATES.corporateExtra + " for each extra session on the same day.</li><li>Ceremony and private events: from " + RATES.ceremony + ".</li></ul><p>Travel within London zones " + RATES.travelZones + " is included. Further out, a travel fee is quoted before you book. No VAT is charged.</p>" },
-      { q: "Are you insured?", a: "Yes. I hold " + RATES.publicLiability + " public liability and " + RATES.indemnity + " professional indemnity cover with " + RATES.insurer + ". A copy of the certificate is available on request." },
+      RATES.insured && { q: "Are you insured?", a: "Yes. I hold " + RATES.publicLiability + " public liability and " + RATES.indemnity + " professional indemnity cover with " + RATES.insurer + ". A copy of the certificate is available on request." },
       { q: "What's your cancellation policy?", a: "Sessions aren't cancelled, but they can be rescheduled. Let me know as early as you can and we'll find another date that works." },
       { q: "What should I wear or bring?", a: "Comfortable, loose clothing you can relax in. Please bring your own mat, cushion or blanket to lie on." }
     ] },
@@ -244,7 +246,7 @@
       '<section class="panel panel--stack">' +
         '<article class="card offer"><p class="offer__meta">60 minutes · ' + RATES.group + ' per person</p><h2>Group Sound Baths</h2><p>The public session. Doors open fifteen minutes early. Roughly an hour of continuous sound, then silence, then tea if the venue allows it.</p></article>' +
         '<article class="card offer"><p class="offer__meta">60 minutes · one person · from ' + RATES.oneToOne + '</p><h2>1:1 Sound Healing Sessions</h2><p>Tibetan singing bowl sessions tailored to you, in person or at your space. A short conversation first, then sound played close — bowls placed on and around the body, voice used sparingly. Suited to people who find group rooms distracting.</p></article>' +
-        '<article class="card offer"><p class="offer__meta">45–90 minutes · up to ' + RATES.corporateCap + ' people · from ' + RATES.corporate + '</p><h2>Corporate Wellness Sessions</h2><p>Sound healing brought into offsites, wellness weeks and team days. A brief framing of what sound is and isn\'t, the session itself, and space for questions afterwards. Fully insured — certificate on request.</p>' +
+        '<article class="card offer"><p class="offer__meta">45–90 minutes · up to ' + RATES.corporateCap + ' people · from ' + RATES.corporate + '</p><h2>Corporate Wellness Sessions</h2><p>Sound healing brought into offsites, wellness weeks and team days. A brief framing of what sound is and isn\'t, the session itself, and space for questions afterwards.' + (RATES.insured ? ' Fully insured — certificate on request.' : '') + '</p>' +
           '<button class="textbtn" type="button" data-action="corporate-inquiry">Corporate inquiries →</button></article>' +
         '<article class="card offer"><p class="offer__meta">By arrangement · from ' + RATES.ceremony + '</p><h2>Ceremony &amp; private events</h2><p>Weddings, namings, memorials, milestone birthdays, retreat closings. Sound written around the shape of your day, agreed with you beforehand rather than improvised at you.</p></article>' +
       '</section>' +
@@ -389,7 +391,7 @@
         '<div class="stack">' +
           '<div class="card"><h3>What arrives with me</h3><p>The instruments, and a short introduction for people who have never done this. Please bring your own mat, blanket and anything else you need to lie down comfortably. Setup takes thirty minutes, pack-down twenty.</p></div>' +
           '<div class="card"><h3>What the room needs</h3><p>Floor space of roughly two square metres per person, lighting that can be lowered, and a door that closes. Carpet is a bonus, not a requirement.</p></div>' +
-          '<div class="card"><h3>Insured and ready for your venue</h3><p>I hold ' + RATES.publicLiability + ' public liability and ' + RATES.indemnity + ' professional indemnity cover with ' + RATES.insurer + '. A copy of the certificate and a short risk assessment for your space are available on request, and I\'m happy to fill in supplier forms.</p></div>' +
+          (RATES.insured ? '<div class="card"><h3>Insured and ready for your venue</h3><p>I hold ' + RATES.publicLiability + ' public liability and ' + RATES.indemnity + ' professional indemnity cover with ' + RATES.insurer + '. A copy of the certificate and a short risk assessment for your space are available on request, and I\'m happy to fill in supplier forms.</p></div>' : '') +
           '<div class="card"><h3>How it\'s described to your team</h3><p>As an hour of listening. Attendance is always optional, no one is asked to speak, and the session makes no claims about health or performance.</p></div>' +
         '</div>' +
       '</section>' +
@@ -404,7 +406,7 @@
   function renderFaq() {
     var n = 0;
     var groups = FAQ.map(function (g) {
-      var items = g.items.map(function (it) {
+      var items = g.items.filter(Boolean).map(function (it) {
         n += 1;
         var open = state.faq === n;
         return '<div class="card faq' + (open ? " is-open" : "") + '">' +
