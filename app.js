@@ -21,6 +21,21 @@
     ]
   };
 
+  // Prices and insurance. DRAFT: placeholder figures, not yet real. Swap here and every page updates.
+  var RATES = {
+    group: "£25",            // per person, public sound bath
+    oneToOne: "£80",         // 1:1, at a studio
+    home: "£120",            // 1:1, at your home
+    corporate: "£300",       // one 60-min team session
+    corporateCap: 20,        // people included in the corporate price
+    corporateExtra: "£150",  // each extra session the same day
+    ceremony: "£400",
+    travelZones: "1–3",      // travel included within these London zones
+    insurer: "Balens",
+    publicLiability: "£5m",
+    indemnity: "£1m"
+  };
+
   var ROUTES = { home: "home", about: "about", offerings: "offerings", moon: "moon", voice: "voice", events: "events", message: "corporate", corporate: "corporate", faq: "faq" };
   var PATHS = { home: "home", about: "about", offerings: "offerings", moon: "moon", voice: "voice", events: "events", corporate: "message", faq: "faq" };
 
@@ -73,11 +88,13 @@
     ] },
     { group: "Corporate", items: [
       { q: "Do you offer sessions for teams or offsites?", a: "Yes — I run sound healing sessions for corporate wellness days, offsites, and team wellbeing weeks. Sessions can be adapted for group size and available space." },
-      { q: "Do you travel to our office/venue?", a: "Yes. I travel to offices and venues — travel is quoted based on distance, with a travel fee added for anything outside central London." }
+      { q: "Do you travel to our office/venue?", a: "Yes. Travel within London zones " + RATES.travelZones + " is included in the price. Further out, a travel fee is quoted before you book." }
     ] },
     { group: "Booking & practical", items: [
+      { q: "How much does it cost?", a: "<ul><li>Group sound bath: " + RATES.group + " per person.</li><li>1:1 session: from " + RATES.oneToOne + " at a studio, from " + RATES.home + " at your home.</li><li>Corporate session: from " + RATES.corporate + " for up to " + RATES.corporateCap + " people, " + RATES.corporateExtra + " for each extra session on the same day.</li><li>Ceremony and private events: from " + RATES.ceremony + ".</li></ul><p>Travel within London zones " + RATES.travelZones + " is included. Further out, a travel fee is quoted before you book. No VAT is charged.</p>" },
+      { q: "Are you insured?", a: "Yes. I hold " + RATES.publicLiability + " public liability and " + RATES.indemnity + " professional indemnity cover with " + RATES.insurer + ". A copy of the certificate is available on request." },
       { q: "What's your cancellation policy?", a: "Sessions aren't cancelled, but they can be rescheduled. Let me know as early as you can and we'll find another date that works." },
-      { q: "What should I wear or bring?", a: "Comfortable, loose clothing you can relax in. A mat, cushion, or blanket if you have one — otherwise I'll have what you need." }
+      { q: "What should I wear or bring?", a: "Comfortable, loose clothing you can relax in. Please bring your own mat, cushion or blanket to lie on." }
     ] },
     { group: "Credentials", items: [
       { q: "What's your training background?", a: "I'm a certified sound healing practitioner (trained in Nepal), a Reiki Level 2 practitioner (trained in London), and certified in cacao ceremony facilitation (London/Brazil)." }
@@ -132,7 +149,6 @@
         '<p class="lead" style="margin-bottom:30px">An hour of sound where nothing is asked of you. You lie down, you stay warm, and the room does the rest. Offered to groups, to teams, and to one person at a time.</p>' +
         '<div class="cta-stack cta-stack--rule">' +
           '<a class="btn btn--block" href="' + href("offerings") + '" data-nav="offerings">See the offerings</a>' +
-          '<a class="btn btn--outline btn--block" href="' + href("voice") + '" data-nav="voice">Listen first</a>' +
         '</div>' +
       '</section>' +
       '<section class="panel panel--wide">' +
@@ -222,15 +238,15 @@
       '<section class="panel panel--hero">' +
         '<p class="eyebrow">What I offer</p>' +
         '<h1 class="h1">A different theme each time.</h1>' +
-        '<p class="lead">Every offering is the same instruments held differently. Rates are shared on inquiry and scale with room, travel and group size.</p>' +
+        '<p class="lead">Every offering is the same instruments held differently. Prices are starting points, travel within London zones ' + RATES.travelZones + ' is included, and no VAT is charged.</p>' +
       '</section>' +
       photo(PHOTOS.offerCover, "43") +
       '<section class="panel panel--stack">' +
-        '<article class="card offer"><p class="offer__meta">60 minutes</p><h2>Group Sound Baths</h2><p>The public session. Doors open fifteen minutes early. Roughly an hour of continuous sound, then silence, then tea if the venue allows it.</p></article>' +
-        '<article class="card offer"><p class="offer__meta">60 minutes · one person</p><h2>1:1 Sound Healing Sessions</h2><p>Tibetan singing bowl sessions tailored to you, in person or at your space. A short conversation first, then sound played close — bowls placed on and around the body, voice used sparingly. Suited to people who find group rooms distracting.</p></article>' +
-        '<article class="card offer"><p class="offer__meta">45–90 minutes · teams</p><h2>Corporate Wellness Sessions</h2><p>Sound healing brought into offsites, wellness weeks and team days. A brief framing of what sound is and isn\'t, the session itself, and space for questions afterwards. Mats and instruments travel with me.</p>' +
+        '<article class="card offer"><p class="offer__meta">60 minutes · ' + RATES.group + ' per person</p><h2>Group Sound Baths</h2><p>The public session. Doors open fifteen minutes early. Roughly an hour of continuous sound, then silence, then tea if the venue allows it.</p></article>' +
+        '<article class="card offer"><p class="offer__meta">60 minutes · one person · from ' + RATES.oneToOne + '</p><h2>1:1 Sound Healing Sessions</h2><p>Tibetan singing bowl sessions tailored to you, in person or at your space. A short conversation first, then sound played close — bowls placed on and around the body, voice used sparingly. Suited to people who find group rooms distracting.</p></article>' +
+        '<article class="card offer"><p class="offer__meta">45–90 minutes · up to ' + RATES.corporateCap + ' people · from ' + RATES.corporate + '</p><h2>Corporate Wellness Sessions</h2><p>Sound healing brought into offsites, wellness weeks and team days. A brief framing of what sound is and isn\'t, the session itself, and space for questions afterwards. Fully insured — certificate on request.</p>' +
           '<button class="textbtn" type="button" data-action="corporate-inquiry">Corporate inquiries →</button></article>' +
-        '<article class="card offer"><p class="offer__meta">By arrangement</p><h2>Ceremony &amp; private events</h2><p>Weddings, namings, memorials, milestone birthdays, retreat closings. Sound written around the shape of your day, agreed with you beforehand rather than improvised at you.</p></article>' +
+        '<article class="card offer"><p class="offer__meta">By arrangement · from ' + RATES.ceremony + '</p><h2>Ceremony &amp; private events</h2><p>Weddings, namings, memorials, milestone birthdays, retreat closings. Sound written around the shape of your day, agreed with you beforehand rather than improvised at you.</p></article>' +
       '</section>' +
       '<section class="panel panel--wide panel--center">' +
         '<h2 class="h2 h2--cta">Innerwave</h2>' +
@@ -373,6 +389,7 @@
         '<div class="stack">' +
           '<div class="card"><h3>What arrives with me</h3><p>The instruments, and a short introduction for people who have never done this. Please bring your own mat, blanket and anything else you need to lie down comfortably. Setup takes thirty minutes, pack-down twenty.</p></div>' +
           '<div class="card"><h3>What the room needs</h3><p>Floor space of roughly two square metres per person, lighting that can be lowered, and a door that closes. Carpet is a bonus, not a requirement.</p></div>' +
+          '<div class="card"><h3>Insured and ready for your venue</h3><p>I hold ' + RATES.publicLiability + ' public liability and ' + RATES.indemnity + ' professional indemnity cover with ' + RATES.insurer + '. A copy of the certificate and a short risk assessment for your space are available on request, and I\'m happy to fill in supplier forms.</p></div>' +
           '<div class="card"><h3>How it\'s described to your team</h3><p>As an hour of listening. Attendance is always optional, no one is asked to speak, and the session makes no claims about health or performance.</p></div>' +
         '</div>' +
       '</section>' +
@@ -406,12 +423,7 @@
         '<h1 class="h1">Questions you might have.</h1>' +
         '<p class="lead">If yours isn\'t here, write to <a href="mailto:' + EMAIL + '">' + EMAIL + '</a> and it will be answered directly.</p>' +
       '</section>' +
-      groups +
-      '<section class="panel panel--wide panel--center">' +
-        '<h2 class="h2 h2--cta">Still deciding?</h2>' +
-        '<p class="lead lead--13 lead--cta">Listen to a recording first, and come when it makes sense to.</p>' +
-        '<div class="cta-stack"><a class="btn" style="padding:15px 24px" href="' + href("voice") + '" data-nav="voice">Listen first</a></div>' +
-      '</section>'
+      groups
     );
   }
 
