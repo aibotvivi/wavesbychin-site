@@ -106,6 +106,27 @@ it in Admin → Data streams once the real domain exists; it does not affect col
 Verified: collect hits carry `gcs=G100` (denied, cookieless) before Accept and `G101` after.
 Expect GA to under-count — it only stores people who pressed Accept.
 
+## Cross-domain tracking with InnerWaves — blocked on a real domain
+
+Wavesbychin and InnerWaves are two separate GA4 data streams on the same "Wavesbychin"
+property (see `~/taroscope-app` for InnerWaves' own GA setup, added 2026-09-23). Today
+they are tracked as unrelated traffic: a visitor who clicks through from here to
+InnerWaves shows up as two disconnected sessions, not one journey, and the Innerwave link
+below points at the GitHub repo, not at InnerWaves itself — nobody can actually click
+through to the live app yet.
+
+Fixing this needs, in order:
+1. Real domains for both sites (neither is decided as of 2026-09-23 — this file's own
+   `wavesbychin.com` GA placeholder is not confirmed, and InnerWaves' planned subdomain
+   name isn't chosen either; see `~/taroscope-app/docs/hosting.md` §5).
+2. `INNERWAVE_URL` in `config.js` repointed from the GitHub repo to InnerWaves' real URL.
+3. Both domains added to **each** stream's Admin → Data Streams → Configure tag settings
+   → Configure your domains, so gtag auto-decorates links between them with `_gl`.
+
+Configuring step 3 now, before 1–2 exist, would be inert — the current Innerwave link
+doesn't point at either real host, so no decoration would ever fire. Do this at the same
+cutover as the InnerWaves `docs/hosting.md` checklist, not before.
+
 ## Still outstanding (from the handoff)
 
 - No prices are published — the copy says rates are shared on inquiry.

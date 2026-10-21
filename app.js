@@ -23,8 +23,10 @@
 
   // Prices and insurance. Prices are set from London market rates (Sep 2026). Swap here and every page updates.
   // Insurance copy shows only when insured is true — turn it on once the policy is in place.
+  // showPrices false: the FAQ asks people to email for a quote instead of listing prices.
   var RATES = {
     insured: false,
+    showPrices: false,
     group: "£25",            // per person, public sound bath
     oneToOne: "£80",         // 1:1, at a studio
     home: "£120",            // 1:1, at your home
@@ -37,8 +39,8 @@
     indemnity: "£1m"
   };
 
-  var ROUTES = { home: "home", about: "about", offerings: "offerings", moon: "moon", voice: "voice", events: "events", message: "corporate", corporate: "corporate", faq: "faq" };
-  var PATHS = { home: "home", about: "about", offerings: "offerings", moon: "moon", voice: "voice", events: "events", corporate: "message", faq: "faq" };
+  var ROUTES = { home: "home", about: "about", offerings: "offerings", moon: "moon", voice: "voice", events: "events", message: "corporate", corporate: "corporate", faq: "faq", privacy: "privacy" };
+  var PATHS = { home: "home", about: "about", offerings: "offerings", moon: "moon", voice: "voice", events: "events", corporate: "message", faq: "faq", privacy: "privacy" };
 
   var emptyForm = function () {
     return { type: "general", company: "", name: "", email: "", people: "", date: "", format: "workshop", message: "" };
@@ -63,7 +65,7 @@
   var TIMELINE = [
     { year: "Feb 2023", title: "Sound Healing, Nepal 🇳🇵", detail: "Certified in Sound Healing in Nepal." },
     { year: "Feb 2024", title: "Reiki Level 2, London 🇬🇧", detail: "Certified in Level 2 Reiki in London." },
-    { year: "Dec 2025", title: "Cacao ceremony 🇧🇷", detail: "Certified in cacao ceremony by a Brazilian instructor." },
+    { year: "Dec 2025", title: "Cacao ceremony 🇧🇷", detail: "Certified in cacao ceremony in London, with a Brazilian instructor." },
     { year: "2026 — ongoing", title: "BaZi 🇭🇰", detail: "Currently studying BaZi." },
     { year: "2026 — ongoing", title: "Pranic healing 🇮🇳", detail: "Currently studying Pranic healing." }
   ];
@@ -72,10 +74,10 @@
     { group: "Before you book", items: [
       { q: "What should I expect in a session?", a: "Every session is a little different, but most begin with settling in — some breathwork or a short grounding moment — before moving into sound with Tibetan singing bowls. I often work close to you during the sound healing portion, moving the bowls near your body so you feel the vibration as well as hear it. Some people fall asleep, some feel a deep sense of calm, others feel very little the first time — all of that is normal." },
       { q: "Is this a substitute for medical or mental health treatment?", a: "No. Sound healing, reiki, and cacao ceremony are wellness practices, not medical treatment. If you have a specific health concern, please continue working with your doctor or therapist alongside any sessions with me." },
-      { q: "Is sound healing safe for everyone?", a: "<p>Sound healing is gentle and suits most people. However, it is not suitable if any of the following apply to you:</p><ul><li>You're pregnant.</li><li>You have epilepsy or a seizure condition.</li><li>You have a pacemaker, metal implants or have had recent surgery.</li><li>You have tinnitus or sound sensitivity.</li></ul><p>If you're unsure whether sound healing is right for you, please get in touch before booking.</p>" }
+      { q: "Is sound healing safe for everyone?", a: "<p>Sound healing is gentle and suits most people. However, it is not suitable if any of the following apply to you:</p><ul><li>You're pregnant.</li><li>You have epilepsy or a seizure condition.</li><li>You have a pacemaker, metal implants or have had recent surgery.</li><li>You have tinnitus or sound sensitivity.</li></ul><p>Cacao is always optional. Please skip it if you take antidepressants (SSRIs or MAOIs) or other prescribed medication that affects mood, have a heart condition or high blood pressure, or are pregnant or breastfeeding.</p><p>If you're unsure whether sound healing is right for you, please get in touch before booking.</p>" }
     ] },
     { group: "During a session", items: [
-      { q: "You mentioned working close to clients during sound healing — what does that involve?", a: "I move the bowls near your body during parts of the session so you can feel the vibration, not just hear it. If you'd prefer more distance, just let me know beforehand — I'm always happy to adjust." },
+      { q: "How does a sound healing session work?", a: "You settle onto a mat, we breathe for a few minutes, then I play seven Tibetan singing bowls while you rest and listen. I bring the bowls close so you feel the sound as well as hear it; just say if you'd prefer more distance." },
       { q: "What's included in a cacao ceremony?", a: "Cacao ceremonies are a slower, more ceremonial experience — often paired with intention-setting, breathwork, or sound." },
       { q: "Can I request specific elements — reiki, chanting, breathwork?", a: "Yes. I shape each session around the group and the time we have, so let me know if there's something you're drawn to or want to include." }
     ] },
@@ -84,30 +86,31 @@
       { q: "Why do I feel sleepy or “floaty” afterwards?", a: "Your body has shifted into rest mode, so this is completely normal. Sit for a moment, feel your feet on the floor, drink some water and have a light snack. Plan a quiet evening if you can." },
       { q: "Is it normal to feel emotional?", a: "Yes. Deep relaxation can bring feelings to the surface. Let them pass without judgement. If something difficult stays with you, reach out to a friend or a qualified professional." },
       { q: "I didn't feel much. Did it work?", a: "Every session is different. Effects can be subtle or show up later, often as deeper sleep or a calmer next day." },
-      { q: "What should I avoid for the rest of the day?", a: "Keep things gentle. Go easy on alcohol, strong caffeine, heavy meals and screens." },
-      { q: "Can I drive straight after?", a: "Wait at least 10 to 15 minutes. Drink some water and only drive once you feel fully alert." }
+      { q: "What should I avoid for the rest of the day?", a: "Keep things gentle. Go easy on alcohol, strong caffeine, heavy meals and screens." }
     ] },
     { group: "Corporate", items: [
       { q: "Do you offer sessions for teams or offsites?", a: "Yes — I run sound healing sessions for corporate wellness days, offsites, and team wellbeing weeks. Sessions can be adapted for group size and available space." },
-      { q: "Do you travel to our office/venue?", a: "Yes. Travel is charged on top of the session price, based on distance from East London, and quoted before you book." }
+      { q: "Do you travel to our office/venue?", a: "Yes, and travel is included in the price." }
     ] },
     { group: "Booking & practical", items: [
-      { q: "How much does it cost?", a: "<ul><li>Group sound bath: " + RATES.group + " per person.</li><li>1:1 session: from " + RATES.oneToOne + " at a studio, from " + RATES.home + " at your home.</li><li>Corporate session: from " + RATES.corporate + " for up to " + RATES.corporateCap + " people, " + RATES.corporateExtra + " for each extra session on the same day.</li><li>Ceremony and private events: from " + RATES.ceremony + ".</li></ul><p>Prices don't include travel. For sessions at your home, office or venue, a travel fee based on distance from East London is added and quoted before you book. No VAT is charged.</p>" },
+      { q: "How much does it cost?", a: !RATES.showPrices
+        ? "<p>Every session is unique. Email me at <a href=\"mailto:" + EMAIL + "\">" + EMAIL + "</a> with what you have in mind (the kind of session, how many people, where and when) and I'll send you a quote.</p>"
+        : "<ul><li>Group sound bath: " + RATES.group + " per person.</li><li>1:1 session: from " + RATES.oneToOne + " at a studio, from " + RATES.home + " at your home.</li><li>Corporate session: from " + RATES.corporate + " for up to " + RATES.corporateCap + " people, " + RATES.corporateExtra + " for each extra session on the same day.</li><li>Ceremony and private events: from " + RATES.ceremony + ".</li></ul><p>Travel to your home, office or venue is included. No VAT is charged.</p>" },
       RATES.insured && { q: "Are you insured?", a: "Yes. I hold " + RATES.publicLiability + " public liability and " + RATES.indemnity + " professional indemnity cover with " + RATES.insurer + ". A copy of the certificate is available on request." },
       { q: "What's your cancellation policy?", a: "Sessions aren't cancelled, but they can be rescheduled. Let me know as early as you can and we'll find another date that works." },
-      { q: "What should I wear or bring?", a: "Comfortable, loose clothing you can relax in. Please bring your own mat, cushion or blanket to lie on." }
+      { q: "What should I wear or bring?", a: "Wear comfortable, loose clothing you can relax in. What to bring depends on the venue. Some provide mats, cushions and blankets. If it doesn't, please bring your own mat, cushion or blanket to lie on." }
     ] },
     { group: "Credentials", items: [
-      { q: "What's your training background?", a: "I'm a certified sound healing practitioner (trained in Nepal), a Reiki Level 2 practitioner (trained in London), and certified in cacao ceremony facilitation (London/Brazil)." }
+      { q: "What's your training background?", a: "I'm a certified sound healing practitioner (trained in Nepal), a Reiki Level 2 practitioner (trained in London), and certified in cacao ceremony facilitation (trained in London with a Brazilian instructor)." }
     ] }
   ];
 
   var PHASES = [
-    { name: "New Moon", intent: "Setting down", disc: "#E9E8E3", body: "Low gong, long silences, the darkest room of the cycle. We name one thing we are beginning and leave it unspoken after that." },
-    { name: "Waxing Crescent", intent: "First movement", disc: "linear-gradient(100deg,#E9E8E3 0 76%,#131310 76% 100%)", body: "Bowls only, played light and quick. A short session, forty-five minutes, usually at the start of a working week." },
+    { name: "New Moon", intent: "Setting down", disc: "#E9E8E3", body: "The lowest bowls, long silences, the darkest room of the cycle. We name one thing we are beginning and leave it unspoken after that." },
+    { name: "Waxing Crescent", intent: "First movement", disc: "linear-gradient(100deg,#E9E8E3 0 76%,#131310 76% 100%)", body: "The higher bowls, played light and quick. A short session, forty-five minutes, usually at the start of a working week." },
     { name: "First Quarter", intent: "Friction", disc: "linear-gradient(90deg,#E9E8E3 0 50%,#131310 50% 100%)", body: "Two instruments deliberately at odds, resolved slowly. The most audible session of the eight, and the one people remember." },
     { name: "Waxing Gibbous", intent: "Tending", disc: "linear-gradient(80deg,#E9E8E3 0 26%,#131310 26% 100%)", body: "Voice takes the lead — sustained tones, few instruments. Often paired with the Voice &amp; Breath circle for those who want to join in." },
-    { name: "Full Moon", intent: "Full room", full: true, body: "The largest gathering of the month. Every instrument, ninety minutes, and the one session that regularly sells out. Booking opens ten days ahead." },
+    { name: "Full Moon", intent: "Full room", full: true, body: "The largest gathering of the month. Every instrument, ninety minutes, and the biggest room of the cycle. Booking opens ten days ahead." },
     { name: "Waning Gibbous", intent: "Telling", disc: "linear-gradient(280deg,#E9E8E3 0 26%,#131310 26% 100%)", body: "Sound with a spoken thread running through it — a short reading, then an hour of quiet. Small room, twelve people at most." },
     { name: "Last Quarter", intent: "Putting down", disc: "linear-gradient(270deg,#E9E8E3 0 50%,#131310 50% 100%)", body: "Descending tones, nothing added in the second half. The session ends with a single bowl left to fade on its own." },
     { name: "Waning Crescent", intent: "Rest", disc: "linear-gradient(260deg,#E9E8E3 0 76%,#131310 76% 100%)", body: "Dawn session, forty minutes, no framing and no closing circle. You arrive, you lie down, you leave when you are ready." }
@@ -145,7 +148,7 @@
       photo(PHOTOS.banner, "169") +
       '<section class="panel panel--hero">' +
         '<h1 class="h1 h1--home">Somewhere to put the noise down.</h1>' +
-        '<p style="margin:0 0 20px;font-family:var(--serif);font-weight:700;font-size:clamp(17px,2.4vw,21px);color:var(--ink);line-height:normal">Gong · Singing bowls · Voice</p>' +
+        '<p style="margin:0 0 20px;font-family:var(--serif);font-weight:700;font-size:clamp(17px,2.4vw,21px);color:var(--ink);line-height:normal">Singing bowls · Voice</p>' +
         '<p style="margin:0 0 26px;font-size:12px;letter-spacing:0.28em;text-transform:uppercase;color:var(--body);font-weight:500">Live sound, held in person</p>' +
         '<p class="lead" style="margin-bottom:30px">An hour of sound where nothing is asked of you. You lie down, you stay warm, and the room does the rest. Offered to groups, to teams, and to one person at a time.</p>' +
         '<div class="cta-stack cta-stack--rule">' +
@@ -167,7 +170,7 @@
       '<section class="panel panel--wide">' +
         '<h2 class="h2 h2--lg" style="margin-bottom:26px">What a session is</h2>' +
         '<div class="stack">' +
-          '<div class="card"><h3>In the room</h3><p>Instruments played live — gong, Himalayan and crystal bowls, chimes, voice. You lie on a mat under a blanket and listen. There is nothing to learn beforehand and nothing to perform.</p></div>' +
+          '<div class="card"><h3>In the room</h3><p>Seven Tibetan singing bowls, played live. You lie on a mat under a blanket and listen. There is nothing to learn beforehand and nothing to perform.</p></div>' +
           '<div class="card"><h3>Who comes</h3><p>People who meditate daily and people who never have. Teams at the end of a long quarter. Couples, birthdays, farewells. First-timers are the majority, most weeks.</p></div>' +
           '<div class="card"><h3>How to begin</h3><p>Come to a public session, or bring sound to your own room — an office, a studio, a living room, a retreat.</p></div>' +
         '</div>' +
@@ -221,9 +224,9 @@
       '<section class="panel">' +
         '<h2 class="h2">How I work</h2>' +
         '<div class="stack">' +
-          '<div class="card"><h3>Close, Intentional Sound</h3><p>I work primarily with Tibetan singing bowls, and I bring the sound close — moving near each person during a session so the frequency isn\'t just heard, but felt. It\'s a more intimate way of working, and it\'s central to how I practice.</p></div>' +
-          '<div class="card"><h3>Shaped Around You</h3><p>No two sessions look exactly the same. Depending on the group, the time we have, and the intention behind the session, I draw from a wider toolkit — affirmation, chanting, breathwork, meditation, reiki, cacao, and tea sharing — weaving in what serves the moment rather than following a fixed format.</p></div>' +
-          '<div class="card"><h3>What I don\'t claim</h3><p>This is live sound and rest. It is not medical care, it makes no health claims, and it does not replace advice or treatment from a professional.</p></div>' +
+          '<div class="card"><h3>Close, Intentional Sound</h3><p>I work primarily with Tibetan singing bowls, and I bring the sound close — moving near each person during a session so the vibration isn\'t just heard, but felt. It\'s a more intimate way of working, and it\'s central to how I practise. If you\'d prefer more distance, tell me beforehand and I\'ll keep it.</p></div>' +
+          '<div class="card"><h3>Shaped Around You</h3><p>Each session has a clear shape — arrival, sound, rest, close — and within it I draw on breathwork, chanting, meditation, reiki, cacao or tea, depending on the group and the time we have.</p></div>' +
+          '<div class="card"><h3>What I don\'t claim</h3><p>This is live sound and rest, not medical care. It makes no health claims and doesn\'t replace advice or treatment from a professional.</p></div>' +
         '</div>' +
       '</section>' +
       '<section class="panel panel--wide panel--center">' +
@@ -239,12 +242,12 @@
       '<section class="panel panel--hero">' +
         '<p class="eyebrow">What I offer</p>' +
         '<h1 class="h1">A different theme each time.</h1>' +
-        '<p class="lead">Every offering is the same instruments held differently. Prices are starting points. Travel to your home, office or venue is charged on top and quoted before you book. No VAT is charged.</p>' +
+        '<p class="lead">Every offering is the same instruments held differently. Prices are starting points. Travel to your home, office or venue is included. No VAT is charged.</p>' +
       '</section>' +
       photo(PHOTOS.offerCover, "43") +
       '<section class="panel panel--stack">' +
         '<article class="card offer"><p class="offer__meta">60 minutes · ' + RATES.group + ' per person</p><h2>Group Sound Baths</h2><p>The public session. Doors open fifteen minutes early. Roughly an hour of continuous sound, then silence, then tea if the venue allows it.</p></article>' +
-        '<article class="card offer"><p class="offer__meta">60 minutes · one person · from ' + RATES.oneToOne + '</p><h2>1:1 Sound Healing Sessions</h2><p>Tibetan singing bowl sessions tailored to you, in person or at your space. A short conversation first, then sound played close — bowls placed on and around the body, voice used sparingly. Suited to people who find group rooms distracting.</p></article>' +
+        '<article class="card offer"><p class="offer__meta">60 minutes · one person · from ' + RATES.oneToOne + '</p><h2>1:1 Sound Healing Sessions</h2><p>Tibetan singing bowl sessions tailored to you, in person or at your space. A short conversation first, then sound played close — bowls played near the body, voice used sparingly. Suited to people who find group rooms distracting.</p></article>' +
         '<article class="card offer"><p class="offer__meta">45–90 minutes · up to ' + RATES.corporateCap + ' people · from ' + RATES.corporate + '</p><h2>Corporate Wellness Sessions</h2><p>Sound healing brought into offsites, wellness weeks and team days. A brief framing of what sound is and isn\'t, the session itself, and space for questions afterwards.' + (RATES.insured ? ' Fully insured — certificate on request.' : '') + '</p>' +
           '<button class="textbtn" type="button" data-action="corporate-inquiry">Corporate inquiries →</button></article>' +
         '<article class="card offer"><p class="offer__meta">By arrangement · from ' + RATES.ceremony + '</p><h2>Ceremony &amp; private events</h2><p>Weddings, namings, memorials, milestone birthdays, retreat closings. Sound written around the shape of your day, agreed with you beforehand rather than improvised at you.</p></article>' +
@@ -292,14 +295,13 @@
       '</section>' +
       photo(PHOTOS.voice, "167") +
       '<section class="panel media-grid">' +
-        '<figure><div class="embed">Video embed — full moon session, 2 min</div><figcaption>A full session, cut to two minutes. Filmed at the March full moon gathering.</figcaption></figure>' +
-        '<figure><div class="embed">Video embed — how a gong is played</div><figcaption>Close on the gong: where it is struck, and why the sound keeps moving after the hand leaves.</figcaption></figure>' +
+        '<figure><div class="embed">Video embed — full moon session, 2 min</div><figcaption>A full moon session, cut to two minutes.</figcaption></figure>' +
+        '<figure><div class="embed">Video embed — how a singing bowl is played</div><figcaption>Close on the bowl: where the mallet strikes and circles, and why the sound keeps moving after the hand leaves.</figcaption></figure>' +
       '</section>' +
       '<section class="panel">' +
         '<h2 class="h2 h2--lg">Listening pieces</h2>' +
         '<div class="stack">' +
-          '<div class="card track"><div><h3>Long Gong</h3><p class="track__meta">11:24 · single instrument</p></div><div class="track__player">Audio player — drop file or embed</div></div>' +
-          '<div class="card track"><div><h3>Bowls, Seven</h3><p class="track__meta">18:02 · Himalayan bowls</p></div><div class="track__player">Audio player — drop file or embed</div></div>' +
+          '<div class="card track"><div><h3>Bowls, Seven</h3><p class="track__meta">18:02 · seven Tibetan bowls</p></div><div class="track__player">Audio player — drop file or embed</div></div>' +
           '<div class="card track"><div><h3>Voice, Unaccompanied</h3><p class="track__meta">6:40 · voice only</p></div><div class="track__player">Audio player — drop file or embed</div></div>' +
         '</div>' +
       '</section>'
@@ -322,6 +324,7 @@
         '<form class="form form--sub" data-form="subscribe">' +
           '<input class="ctl" name="email" type="email" required placeholder="you@email.com" value="' + esc(state.subEmail) + '">' +
           '<button class="btn" type="submit" style="padding:15px 24px"' + (state.subLabel === "Adding…" ? " disabled" : "") + '>' + state.subLabel + '</button>' +
+          '<p class="form__note">Occasional emails about new dates, nothing else. Unsubscribe any time by replying. <a href="' + href("privacy") + '" data-nav="privacy">Privacy notice</a>.</p>' +
           (state.subError ? '<p class="form__note form__note--error">That didn\'t go through — email <a href="mailto:' + EMAIL + '">' + EMAIL + '</a> and I\'ll add you by hand.</p>' : "") +
         '</form>' +
       '</section>' +
@@ -371,7 +374,7 @@
         '<textarea class="ctl" name="message" rows="4" required placeholder="Your message * — the space, the date, or just a question.">' + esc(f.message) + '</textarea>' +
         '<button class="btn" type="submit"' + (state.sending ? " disabled" : "") + '>' + (state.sending ? "Sending…" : "Send message") + '</button>' +
         (state.sendError ? '<p class="form__note form__note--error">That didn\'t go through. Please email <a href="mailto:' + EMAIL + '">' + EMAIL + '</a> directly — your message is still in the box above.</p>' : "") +
-        '<p class="form__note">* required — everything else is optional.</p>' +
+        '<p class="form__note">* required — everything else is optional. If a health condition applies to you, please mention it — see <a href="' + href("privacy") + '" data-nav="privacy">how your details are used</a>.</p>' +
         '<p class="form__alt">Or write directly: <a href="mailto:' + EMAIL + '">' + EMAIL + '</a></p>' +
       '</form>';
     }
@@ -398,6 +401,40 @@
         '<h2 class="h2 h2--cta">Questions before you ask internally?</h2>' +
         '<p class="lead lead--13 lead--cta">Logistics, accessibility, what to tell people who are unsure — all answered on the FAQ page.</p>' +
         '<a class="btn btn--outline btn--wide" href="' + href("faq") + '" data-nav="faq">Read the FAQ</a>' +
+      '</section>'
+    );
+  }
+
+  function renderPrivacy() {
+    var mail = '<a href="mailto:' + EMAIL + '">' + EMAIL + '</a>';
+    return (
+      '<section class="panel panel--hero">' +
+        '<p class="eyebrow">Privacy notice</p>' +
+        '<h1 class="h1">How your details are used.</h1>' +
+        '<p class="lead">Last updated 24 September 2026.</p>' +
+      '</section>' +
+      '<section class="panel panel--wide panel--story story">' +
+        '<h2 class="h2 h2--story">Who I am</h2>' +
+        '<p>Wavesbychin is run by Vivi, a sole trader based in East London. I decide how the details you send through this site are used, which makes me the data controller under UK data protection law. You can reach me at ' + mail + '.</p>' +
+
+        '<h2 class="h2 h2--story">What I collect</h2>' +
+        '<p><strong>When you send a message:</strong> your email address, your message, and anything else you choose to fill in: your name, company, group size, preferred date and session format. If you tell me about a health condition, such as pregnancy, epilepsy or a pacemaker, I use it only to check a session is suitable for you and keep it only as long as your booking needs it.</p>' +
+        '<p><strong>When you join the mailing list:</strong> your email address.</p>' +
+        '<p><strong>If you accept analytics cookies:</strong> Google Analytics records which pages are visited, roughly where from, and on what kind of device. IP addresses are anonymised, and nothing is used for advertising. If you decline, no analytics cookies are set.</p>' +
+        '<p><strong>Your cookie choice</strong> is stored in your own browser so the banner does not keep asking.</p>' +
+
+        '<h2 class="h2 h2--story">Why, and on what basis</h2>' +
+        '<p>Messages are used to reply to you and, if you book, to arrange and deliver the session. The legal basis is taking steps at your request before a contract, and my legitimate interest in answering enquiries. The mailing list and analytics rely on your consent, which you can withdraw at any time.</p>' +
+
+        '<h2 class="h2 h2--story">Where it goes</h2>' +
+        '<p>Form entries are stored in a database run by Supabase. A copy of each new entry is sent to me as a private Telegram message, so I can reply quickly. Email is handled through Google (Gmail), analytics through Google Analytics, and the site itself is hosted on GitHub Pages, which, like any web host, sees visitors\' IP addresses. Fonts load from Google Fonts. Some of these providers store data outside the UK. Where they do, they use the safeguards UK law requires. Your details are never sold or shared for marketing.</p>' +
+
+        '<h2 class="h2 h2--story">How long I keep it</h2>' +
+        '<p>Messages are kept for up to two years after we last spoke, then deleted. Mailing-list addresses are kept until you unsubscribe. Records of paid bookings are kept for six years, because tax law requires it.</p>' +
+
+        '<h2 class="h2 h2--story">Your rights</h2>' +
+        '<p>You can ask to see the details I hold about you, have them corrected or deleted, object to how they are used, or withdraw consent. Email ' + mail + ' and I will reply within a month. To unsubscribe from the mailing list, reply to any email with “unsubscribe”.</p>' +
+        '<p>If you are unhappy with how your details are handled, you can complain to the Information Commissioner\'s Office at <a href="https://ico.org.uk/make-a-complaint/" target="_blank" rel="noopener">ico.org.uk</a>. I would appreciate the chance to put it right first.</p>' +
       '</section>'
     );
   }
@@ -430,7 +467,7 @@
 
   var PAGES = {
     home: renderHome, about: renderAbout, offerings: renderOfferings, moon: renderMoon,
-    voice: renderVoice, events: renderEvents, corporate: renderCorporate, faq: renderFaq
+    voice: renderVoice, events: renderEvents, corporate: renderCorporate, faq: renderFaq, privacy: renderPrivacy
   };
 
   var TITLES = {
@@ -441,7 +478,8 @@
     voice: "Voice & Video — Wavesbychin",
     events: "What's on — Wavesbychin",
     corporate: "Send a message — Wavesbychin",
-    faq: "FAQ — Wavesbychin"
+    faq: "FAQ — Wavesbychin",
+    privacy: "Privacy notice — Wavesbychin"
   };
 
   // ---------- rendering ----------
@@ -527,6 +565,12 @@
     gtag("js", new Date());
     // send_page_view off: the hash router reports each page itself in navigate()
     gtag("config", GA_ID, { send_page_view: false, anonymize_ip: true });
+    // Wavesbychin and InnerWaves share one GA4 property as two data streams; without
+    // this, a report only tells them apart by digging into hostname/stream name. `set`
+    // (not `event`) so it rides on every hit sent afterwards — page_view, message_sent,
+    // subscribe, all of it — with no need to repeat it at each call site. Registered as
+    // an event-scoped custom dimension "Site" in GA4 Admin, 2026-09-24.
+    gtag("set", "site", "wavesbychin");
   }
 
   function applyConsent(choice) {

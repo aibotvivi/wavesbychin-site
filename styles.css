@@ -674,3 +674,4 @@ select.ctl { appearance: auto; }
 }
 .cookie__panel p { margin: 0; font-size: 12.5px; color: var(--body); }
 .cookie__actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.footer__legal a, .cookie__panel a, .form__note a { color: inherit; text-decoration: underline; }
