@@ -70,15 +70,18 @@
     { year: "2026 — ongoing", title: "Pranic healing 🇮🇳", detail: "Currently studying Pranic healing." }
   ];
 
+  // Cacao is hidden from the FAQ only (About page and timeline still mention it). true brings it back.
+  var SHOW_CACAO_FAQ = false;
+
   var FAQ = [
     { group: "Before you book", items: [
       { q: "What should I expect in a session?", a: "<p>Every session is a little different, but most begin with settling in: some gentle breathwork or a short grounding moment. Then I play seven Tibetan singing bowls, often bringing them close so you feel the sound as well as hear it.</p><p>Some people fall asleep, some feel calm, and others feel very little the first time. All of that is normal, and there's nothing you need to do but rest and listen.</p>" },
-      { q: "Is this a substitute for medical or mental health treatment?", a: "No. Sound healing, reiki, and cacao ceremony are wellness practices, not medical treatment. If you have a specific health concern, please continue working with your doctor or therapist alongside any sessions with me." },
-      { q: "Is sound healing safe for everyone?", a: "<p>Sound healing is gentle and suits most people. However, it is not suitable if any of the following apply to you:</p><ul><li>You're pregnant.</li><li>You have epilepsy or a seizure condition.</li><li>You have a pacemaker, metal implants or have had recent surgery.</li><li>You have tinnitus or sound sensitivity.</li></ul><p>Cacao is always optional. Please skip it if you take antidepressants (SSRIs or MAOIs) or other prescribed medication that affects mood, have a heart condition or high blood pressure, or are pregnant or breastfeeding.</p><p>If you're unsure whether sound healing is right for you, please get in touch before booking.</p>" }
+      { q: "Is this a substitute for medical or mental health treatment?", a: "No. Sound healing, reiki" + (SHOW_CACAO_FAQ ? ", and cacao ceremony" : " and breathwork") + " are wellness practices, not medical treatment. If you have a specific health concern, please continue working with your doctor or therapist alongside any sessions with me." },
+      { q: "Is sound healing safe for everyone?", a: "<p>Sound healing is gentle and suits most people. However, it is not suitable if any of the following apply to you:</p><ul><li>You're pregnant.</li><li>You have epilepsy or a seizure condition.</li><li>You have a pacemaker, metal implants or have had recent surgery.</li><li>You have tinnitus or sound sensitivity.</li></ul>" + (SHOW_CACAO_FAQ ? "<p>Cacao is always optional. Please skip it if you take antidepressants (SSRIs or MAOIs) or other prescribed medication that affects mood, have a heart condition or high blood pressure, or are pregnant or breastfeeding.</p>" : "") + "<p>If you're unsure whether sound healing is right for you, please get in touch before booking.</p>" }
     ] },
     { group: "During a session", items: [
       { q: "How does a sound healing session work?", a: "You settle onto a mat, we breathe for a few minutes, then I play seven Tibetan singing bowls while you rest and listen. I bring the bowls close so you feel the sound as well as hear it; just say if you'd prefer more distance." },
-      { q: "What's included in a cacao ceremony?", a: "Cacao ceremonies are a slower, more ceremonial experience — often paired with intention-setting, breathwork, or sound." },
+      SHOW_CACAO_FAQ && { q: "What's included in a cacao ceremony?", a: "Cacao ceremonies are a slower, more ceremonial experience — often paired with intention-setting, breathwork, or sound." },
       { q: "Can I request specific elements — reiki, chanting, breathwork?", a: "Yes. I shape each session around the group and the time we have, so let me know if there's something you're drawn to or want to include." }
     ] },
     { group: "After your session", items: [
@@ -101,7 +104,7 @@
       { q: "What should I wear or bring?", a: "Wear comfortable, loose clothing you can relax in. What to bring depends on the venue. Some provide mats, cushions and blankets. If it doesn't, please bring your own mat, cushion or blanket to lie on." }
     ] },
     { group: "Credentials", items: [
-      { q: "What's your training background?", a: "I'm a certified sound healing practitioner (trained in Nepal), a Reiki Level 2 practitioner (trained in London), and certified in cacao ceremony facilitation (trained in London with a Brazilian instructor)." }
+      { q: "What's your training background?", a: "I'm a certified sound healing practitioner (trained in Nepal)" + (SHOW_CACAO_FAQ ? ", " : " and ") + "a Reiki Level 2 practitioner (trained in London)" + (SHOW_CACAO_FAQ ? ", and certified in cacao ceremony facilitation (trained in London with a Brazilian instructor)" : "") + "." }
     ] }
   ];
 
