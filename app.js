@@ -39,8 +39,15 @@
     indemnity: "£1m"
   };
 
+  // Hidden until ready. Innerwave: the link points at the code repo until the app is live.
+  // Moon: the eight-phase cycle describes sessions that aren't running yet.
+  var SHOW_INNERWAVE = false;
+  var SHOW_MOON = false;
+
   var ROUTES = { home: "home", about: "about", offerings: "offerings", moon: "moon", voice: "voice", events: "events", message: "corporate", corporate: "corporate", faq: "faq", privacy: "privacy" };
   var PATHS = { home: "home", about: "about", offerings: "offerings", moon: "moon", voice: "voice", events: "events", corporate: "message", faq: "faq", privacy: "privacy" };
+
+  if (!SHOW_MOON) delete ROUTES.moon;
 
   var emptyForm = function () {
     return { type: "general", company: "", name: "", email: "", people: "", date: "", format: "workshop", message: "" };
@@ -88,7 +95,7 @@
       { q: "What should I do straight after a sound healing session?", a: "Drink plenty of water. Have a big glass straight away, then keep sipping steadily through the rest of the day. It helps you rehydrate and feel grounded after deep relaxation." },
       { q: "Why do I feel sleepy or “floaty” afterwards?", a: "Your body has shifted into rest mode, so this is completely normal. Sit for a moment, feel your feet on the floor, drink some water and have a light snack. Plan a quiet evening if you can." },
       { q: "Is it normal to feel emotional?", a: "Yes. Deep relaxation can bring feelings to the surface. Let them pass without judgement. If something difficult stays with you, reach out to a friend or a qualified professional." },
-      { q: "I didn't feel much. Did it work?", a: "Every session is different. Effects can be subtle or show up later, often as deeper sleep or a calmer next day." },
+      { q: "I didn't feel much. Did it work?", a: "Every session is different. Some people notice a lot, some very little, and both are fine." },
       { q: "What should I avoid for the rest of the day?", a: "Keep things gentle. Go easy on alcohol, strong caffeine, heavy meals and screens." }
     ] },
     { group: "Corporate", items: [
@@ -158,7 +165,7 @@
           '<a class="btn btn--block" href="' + href("offerings") + '" data-nav="offerings">See the offerings</a>' +
         '</div>' +
       '</section>' +
-      '<section class="panel panel--wide">' +
+      (SHOW_INNERWAVE ? ('<section class="panel panel--wide">' +
         '<h2 class="h2 h2--lg h2--tight">Alongside the sound</h2>' +
         '<p class="lead lead--13" style="text-align:center;margin-bottom:26px">A companion project, open whether or not you ever come to a session.</p>' +
         '<div style="display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))">' +
@@ -169,25 +176,23 @@
             '<span class="card__cta">Visit Innerwave ↗</span>' +
           '</a>' +
         '</div>' +
-      '</section>' +
-      '<section class="panel panel--wide">' +
+      '</section>') : "") +      '<section class="panel panel--wide">' +
         '<h2 class="h2 h2--lg" style="margin-bottom:26px">What a session is</h2>' +
         '<div class="stack">' +
           '<div class="card"><h3>In the room</h3><p>Seven Tibetan singing bowls, played live. You lie on a mat under a blanket and listen. There is nothing to learn beforehand and nothing to perform.</p></div>' +
-          '<div class="card"><h3>Who comes</h3><p>People who meditate daily and people who never have. Teams at the end of a long quarter. Couples, birthdays, farewells. First-timers are the majority, most weeks.</p></div>' +
-          '<div class="card"><h3>How to begin</h3><p>Come to a public session, or bring sound to your own room — an office, a studio, a living room, a retreat.</p></div>' +
+          '<div class="card"><h3>Who comes</h3><p>People who meditate daily and people who never have. Teams at the end of a long quarter. Couples, birthdays, farewells. No experience needed.</p></div>' +
+          '<div class="card"><h3>How to begin</h3><p>Bring sound to your own room — an office, a studio, a living room, a retreat. Send a message with a date and a rough headcount.</p></div>' +
         '</div>' +
         '<p class="quote">You\'re not being asked to believe anything.<br>You\'re being asked to lie down and listen.</p>' +
       '</section>' +
-      '<section class="photo photo--167 photo--band"><div class="sky"></div>' +
+      (SHOW_MOON ? ('<section class="photo photo--167 photo--band"><div class="sky"></div>' +
         '<div class="band__overlay"><p>Tonight: ' + m.name + '</p></div>' +
       '</section>' +
       '<section class="panel panel--wide panel--center">' +
         '<h2 class="h2 h2--lg h2--band">Eight rituals, one lunar month</h2>' +
         '<p class="lead lead--band">The Moon Phase Rituals follow the month rather than the calendar — eight sessions, each one shaped by where the light is.</p>' +
         '<a class="btn btn--outline btn--wide" href="' + href("moon") + '" data-nav="moon">See the cycle</a>' +
-      '</section>' +
-      '<section class="panel panel--wide panel--center">' +
+      '</section>') : "") +      '<section class="panel panel--wide panel--center">' +
         '<h2 class="h2 h2--lg h2--band">Sound for teams</h2>' +
         '<p class="lead lead--band">A session runs 45 to 90 minutes and needs only floor space and a door that closes. Away days, launch weeks, wellbeing programmes, or an ordinary Thursday afternoon.</p>' +
         '<a class="btn btn--wide btn--max" href="' + href("corporate") + '" data-nav="corporate">Make an inquiry</a>' +
@@ -245,21 +250,21 @@
       '<section class="panel panel--hero">' +
         '<p class="eyebrow">What I offer</p>' +
         '<h1 class="h1">A different theme each time.</h1>' +
-        '<p class="lead">Every offering is the same instruments held differently. Prices are starting points. Travel to your home, office or venue is included. No VAT is charged.</p>' +
+        '<p class="lead">Every offering is the same instruments held differently. ' + (RATES.showPrices ? 'Prices are starting points. Travel to your home, office or venue is included. No VAT is charged.' : 'Each session is quoted individually, and travel to your home, office or venue is included.') + '</p>' +
       '</section>' +
       photo(PHOTOS.offerCover, "43") +
       '<section class="panel panel--stack">' +
-        '<article class="card offer"><p class="offer__meta">60 minutes · ' + RATES.group + ' per person</p><h2>Group Sound Baths</h2><p>The public session. Doors open fifteen minutes early. Roughly an hour of continuous sound, then silence, then tea if the venue allows it.</p></article>' +
-        '<article class="card offer"><p class="offer__meta">60 minutes · one person · from ' + RATES.oneToOne + '</p><h2>1:1 Sound Healing Sessions</h2><p>Tibetan singing bowl sessions tailored to you, in person or at your space. A short conversation first, then sound played close — bowls played near the body, voice used sparingly. Suited to people who find group rooms distracting.</p></article>' +
-        '<article class="card offer"><p class="offer__meta">45–90 minutes · up to ' + RATES.corporateCap + ' people · from ' + RATES.corporate + '</p><h2>Corporate Wellness Sessions</h2><p>Sound healing brought into offsites, wellness weeks and team days. A brief framing of what sound is and isn\'t, the session itself, and space for questions afterwards.' + (RATES.insured ? ' Fully insured — certificate on request.' : '') + '</p>' +
+        '<article class="card offer"><p class="offer__meta">60 minutes' + (RATES.showPrices ? ' · ' + RATES.group + ' per person' : '') + '</p><h2>Group Sound Baths</h2><p>For friends, studios, community spaces and celebrations. Roughly an hour of continuous sound, then silence, then tea if the venue allows it.</p></article>' +
+        '<article class="card offer"><p class="offer__meta">60 minutes · one person' + (RATES.showPrices ? ' · from ' + RATES.oneToOne : '') + '</p><h2>1:1 Sound Healing Sessions</h2><p>Tibetan singing bowl sessions tailored to you, in person or at your space. A short conversation first, then sound played close — bowls played near the body, voice used sparingly. Suited to people who find group rooms distracting.</p></article>' +
+        '<article class="card offer"><p class="offer__meta">45–90 minutes · up to ' + RATES.corporateCap + ' people' + (RATES.showPrices ? ' · from ' + RATES.corporate : '') + '</p><h2>Corporate Wellness Sessions</h2><p>Sound healing brought into offsites, wellness weeks and team days. A brief framing of what sound is and isn\'t, the session itself, and space for questions afterwards.' + (RATES.insured ? ' Fully insured — certificate on request.' : '') + '</p>' +
           '<button class="textbtn" type="button" data-action="corporate-inquiry">Corporate inquiries →</button></article>' +
-        '<article class="card offer"><p class="offer__meta">By arrangement · from ' + RATES.ceremony + '</p><h2>Ceremony &amp; private events</h2><p>Weddings, namings, memorials, milestone birthdays, retreat closings. Sound written around the shape of your day, agreed with you beforehand rather than improvised at you.</p></article>' +
+        '<article class="card offer"><p class="offer__meta">By arrangement' + (RATES.showPrices ? ' · from ' + RATES.ceremony : '') + '</p><h2>Ceremony &amp; private events</h2><p>Weddings, namings, memorials, milestone birthdays, retreat closings. Sound written around the shape of your day, agreed with you beforehand rather than improvised at you.</p></article>' +
       '</section>' +
-      '<section class="panel panel--wide panel--center">' +
+      (SHOW_INNERWAVE ? ('<section class="panel panel--wide panel--center">' +
         '<h2 class="h2 h2--cta">Innerwave</h2>' +
         '<p class="lead lead--13 lead--cta">A companion project sits alongside the rituals — Innerwave, for tarot and dream reading.</p>' +
         '<div class="cta-stack"><a class="btn btn--outline btn--block" style="padding:15px" href="' + INNERWAVE + '" target="_blank" rel="noopener">Innerwave ↗</a></div>' +
-      '</section>'
+      '</section>') : "")
     );
   }
 
@@ -281,11 +286,11 @@
       '</section>' +
       '<div class="photo photo--167"><div class="sky"></div></div>' +
       '<section class="panel panel--grid">' + cards + '</section>' +
-      '<section class="panel panel--wide panel--center">' +
+      (SHOW_INNERWAVE ? ('<section class="panel panel--wide panel--center">' +
         '<h2 class="h2 h2--cta">Innerwave</h2>' +
         '<p class="lead lead--13 lead--cta">A companion project sits alongside the rituals — Innerwave, for tarot and dream reading.</p>' +
         '<div class="cta-stack"><a class="btn btn--outline btn--block" style="padding:15px" href="' + INNERWAVE + '" target="_blank" rel="noopener">Innerwave ↗</a></div>' +
-      '</section>'
+      '</section>') : "")
     );
   }
 
@@ -319,11 +324,11 @@
     return (
       '<section class="panel panel--hero">' +
         '<p class="eyebrow" style="margin-bottom:0">What\'s on</p>' +
-        '<p class="lead lead--14" style="margin-top:14px">Upcoming sessions and past events.</p>' +
+        '<p class="lead lead--14" style="margin-top:14px">Past events, and how to hear about new ones.</p>' +
       '</section>' +
       '<section class="panel panel--wide panel--center">' +
-        '<h2 class="h2 h2--md h2--tight">Upcoming events</h2>' +
-        '<p class="lead lead--13 lead--cta">Leave your email and I\'ll send the next dates as they open.</p>' +
+        '<h2 class="h2 h2--md h2--tight">Stay in touch</h2>' +
+        '<p class="lead lead--13 lead--cta">Leave your email and I\'ll let you know when there\'s something new.</p>' +
         '<form class="form form--sub" data-form="subscribe">' +
           '<input class="ctl" name="email" type="email" required placeholder="you@email.com" value="' + esc(state.subEmail) + '">' +
           '<button class="btn" type="submit" style="padding:15px 24px"' + (state.subLabel === "Adding…" ? " disabled" : "") + '>' + state.subLabel + '</button>' +
@@ -394,7 +399,7 @@
       '<section class="panel">' +
         '<h2 class="h2 h2--lg">How it works</h2>' +
         '<div class="stack">' +
-          '<div class="card"><h3>What arrives with me</h3><p>The instruments, and a short introduction for people who have never done this. Please bring your own mat, blanket and anything else you need to lie down comfortably. Setup takes thirty minutes, pack-down twenty.</p></div>' +
+          '<div class="card"><h3>What arrives with me</h3><p>The instruments, and a short introduction for people who have never done this. Mats and blankets depend on the venue: if yours doesn\'t have them, people can bring their own. Setup takes thirty minutes, pack-down twenty.</p></div>' +
           '<div class="card"><h3>What the room needs</h3><p>Floor space of roughly two square metres per person, lighting that can be lowered, and a door that closes. Carpet is a bonus, not a requirement.</p></div>' +
           (RATES.insured ? '<div class="card"><h3>Insured and ready for your venue</h3><p>I hold ' + RATES.publicLiability + ' public liability and ' + RATES.indemnity + ' professional indemnity cover with ' + RATES.insurer + '. A copy of the certificate and a short risk assessment for your space are available on request, and I\'m happy to fill in supplier forms.</p></div>' : '') +
           '<div class="card"><h3>How it\'s described to your team</h3><p>As an hour of listening. Attendance is always optional, no one is asked to speak, and the session makes no claims about health or performance.</p></div>' +
@@ -690,7 +695,7 @@
   // ---------- boot ----------
 
   var iw = document.querySelectorAll("[data-innerwave]");
-  for (var k = 0; k < iw.length; k++) iw[k].setAttribute("href", INNERWAVE);
+  for (var k = 0; k < iw.length; k++) { iw[k].setAttribute("href", INNERWAVE); if (SHOW_INNERWAVE) iw[k].removeAttribute("hidden"); else iw[k].remove(); }
 
   var stored = null;
   try { stored = localStorage.getItem("wbc-cookie"); } catch (err) {}

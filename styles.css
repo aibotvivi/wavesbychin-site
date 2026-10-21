@@ -171,6 +171,7 @@ button { font-size: inherit; }
   gap: 8px;
   line-height: 1;
 }
+.pill[hidden] { display: none; }
 .pill:hover { border-color: var(--ink); }
 .pill--ig:hover { background: var(--card); }
 
