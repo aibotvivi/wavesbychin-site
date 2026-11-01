@@ -111,7 +111,7 @@
       { q: "What should I wear or bring?", a: "Wear comfortable, loose clothing you can relax in. What to bring depends on the venue. Some provide mats, cushions and blankets. If it doesn't, please bring your own mat, cushion or blanket to lie on." }
     ] },
     { group: "Credentials", items: [
-      { q: "What's your training background?", a: "I'm a certified sound healing practitioner (trained in Nepal), a Reiki Level 2 practitioner (trained in London)" + (SHOW_CACAO_FAQ ? ", certified in cacao ceremony facilitation (trained in London with a Brazilian instructor)" : "") + ", and I've completed Pranic Healing Levels 1–3, covering energy work, the chakras and anatomy." }
+      { q: "What's your training background?", a: "I'm a certified sound healing practitioner (trained in Nepal), a Reiki Level 2 practitioner (trained in London)" + (SHOW_CACAO_FAQ ? ", certified in cacao ceremony facilitation (trained in London with a Brazilian instructor)" : "") + ", and I've completed Pranic Healing Levels 1–3, a structured training in energy-based techniques for relaxation and stress relief." }
     ] }
   ];
 
