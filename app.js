@@ -74,7 +74,7 @@
     { year: "Feb 2024", title: "Reiki Level 2, London 🇬🇧", detail: "Certified in Level 2 Reiki in London." },
     { year: "Dec 2025", title: "Cacao ceremony 🇧🇷", detail: "Certified in cacao ceremony in London, with a Brazilian instructor." },
     { year: "2026 — ongoing", title: "BaZi 🇭🇰", detail: "Currently studying BaZi." },
-    { year: "2026", title: "Pranic healing 🇮🇳", detail: "Completed Pranic Healing Levels 1–3." }
+    { year: "2026", title: "Pranic Healing Levels 1–3 🇮🇳", detail: "Completed Pranic Healing Levels 1–3." }
   ];
 
   // Cacao is hidden from the FAQ only (About page and timeline still mention it). true brings it back.
@@ -222,7 +222,7 @@
       '<section class="panel panel--wide panel--story story">' +
         '<h2 class="h2 h2--story">My story</h2>' +
         '<p>My path here started with loss. When my grandmother passed away, I travelled to Nepal on my own — and that journey became the beginning of everything. It led me into <strong>sound healing</strong>, and into <strong>reiki</strong> as a way of understanding my own healing.</p>' +
-        '<p>Since then, the practice has kept growing. I\'m also certified in <strong>cacao ceremony</strong> facilitation, and I\'ve been studying <strong>BaZi</strong> on the side — something that\'s quietly reshaped how I see myself and the people I work with.</p>' +
+        '<p>Since then, the practice has kept growing. I\'m also certified in <strong>cacao ceremony</strong> facilitation, I\'ve completed <strong>Pranic Healing</strong> Levels 1–3, and I\'ve been studying <strong>BaZi</strong> on the side — something that\'s quietly reshaped how I see myself and the people I work with.</p>' +
         '<p><strong>Wavesbychin</strong> is where all of that comes together: sound, <strong>breathwork</strong>, ceremony, and a genuine belief that stillness is something we can return to, not something we have to chase.</p>' +
       '</section>' +
       '<section class="panel panel--wide">' +
