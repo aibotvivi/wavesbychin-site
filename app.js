@@ -74,7 +74,7 @@
     { year: "Feb 2024", title: "Reiki Level 2, London 🇬🇧", detail: "Certified in Level 2 Reiki in London." },
     { year: "Dec 2025", title: "Cacao ceremony 🇧🇷", detail: "Certified in cacao ceremony in London, with a Brazilian instructor." },
     { year: "2026 — ongoing", title: "BaZi 🇭🇰", detail: "Currently studying BaZi." },
-    { year: "2026 — ongoing", title: "Pranic healing 🇮🇳", detail: "Currently studying Pranic healing." }
+    { year: "2026", title: "Pranic healing 🇮🇳", detail: "Completed Pranic Healing Levels 1–3." }
   ];
 
   // Cacao is hidden from the FAQ only (About page and timeline still mention it). true brings it back.
