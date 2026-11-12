@@ -2,4 +2,3 @@ User-agent: *
 Allow: /
 
 Sitemap: https://aibotvivi.github.io/wavesbychin-site/sitemap.xml
-# stale-test: the Build pages action should remove this line
