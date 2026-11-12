@@ -34,8 +34,12 @@ meta description, canonical URL and Open Graph tags, plus JSON-LD (`LocalBusines
 home pages, `FAQPage` on the FAQ, breadcrumbs elsewhere). **Never edit a generated
 `index.html` by hand** — the next build overwrites it.
 
-If you forget to rebuild, visitors still see the new copy (the browser re-renders from
-`app.js`), but search engines see the old text until you rebuild.
+You don't have to remember: `.github/workflows/build-pages.yml` runs the build on GitHub after
+every push that touches `app.js`, `config.js`, `template.html` or the generated files, and
+commits the regenerated pages as `github-actions[bot]` if anything changed (GitHub Pages then
+redeploys). So an edit made in GitHub's web editor or by another AI tool is complete on its own.
+Check a run under the repo's **Actions** tab. Pull before editing locally afterwards
+(`git pull`), since the bot may have added a commit.
 
 When the site gets its own domain: `node scripts/build-pages.mjs --base https://<domain>`
 (or change the default `ORIGIN` in the script) so the canonical URLs and sitemap point there.
