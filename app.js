@@ -1,5 +1,9 @@
-/* Wavesbychin — single-page site. No build step, no dependencies.
-   Routes live in the URL hash (#/about, #/offerings, …); "about" is the default landing page. */
+/* Wavesbychin — static multi-page site, no dependencies.
+   Every page is a real URL (./, offerings/, faq/, …) whose HTML is pre-rendered from the
+   render functions below by scripts/build-pages.mjs, so crawlers see the content without
+   running JS. In the browser this script re-renders the same page for the interactive bits
+   (FAQ, timeline, forms). "about" lives at the site root. Old #/route links redirect.
+   After editing any copy here, run: node scripts/build-pages.mjs */
 (function () {
   "use strict";
 
@@ -148,7 +152,9 @@
     return { name: names[idx], next: next };
   }
 
-  function href(page) { return "#/" + PATHS[page]; }
+  // Relative to the site root: sub-pages carry <base href="../">, so the same link works on
+  // every page, on GitHub Pages' /wavesbychin-site/ prefix and on a future custom domain.
+  function href(page) { return page === "about" ? "./" : PATHS[page] + "/"; }
 
   // ---------- pages ----------
 
@@ -323,7 +329,7 @@
 
     return (
       '<section class="panel panel--hero">' +
-        '<p class="eyebrow" style="margin-bottom:0">What\'s on</p>' +
+        '<h1 class="eyebrow" style="margin-bottom:0">What\'s on</h1>' +
         '<p class="lead lead--14" style="margin-top:14px">Past events, and how to hear about new ones.</p>' +
       '</section>' +
       '<section class="panel panel--wide panel--center">' +
@@ -478,17 +484,37 @@
     voice: renderVoice, events: renderEvents, corporate: renderCorporate, faq: renderFaq, privacy: renderPrivacy
   };
 
+  // <title> and meta description per page — what shows in Google's results.
   var TITLES = {
-    home: "Wavesbychin — sound healing, East London",
-    about: "About me — Wavesbychin",
-    offerings: "What I offer — Wavesbychin",
+    home: "Sound healing in East London — Wavesbychin",
+    about: "Wavesbychin — sound healing, energy healing and breathwork in East London",
+    offerings: "Sound baths, 1:1 and corporate sound healing, London — Wavesbychin",
     moon: "Moon Phase Rituals — Wavesbychin",
     voice: "Voice & Video — Wavesbychin",
-    events: "What's on — Wavesbychin",
-    corporate: "Send a message — Wavesbychin",
-    faq: "FAQ — Wavesbychin",
+    events: "Sound healing events in London — Wavesbychin",
+    corporate: "Book a sound healing session or corporate workshop — Wavesbychin",
+    faq: "Sound healing FAQ: what to expect, safety, booking — Wavesbychin",
     privacy: "Privacy notice — Wavesbychin"
   };
+
+  var DESCRIPTIONS = {
+    home: "Live Tibetan singing bowl sessions in East London: group sound baths, 1:1 sessions, corporate wellness and ceremonies. No experience needed.",
+    about: "I'm Vivi, a certified sound healing practitioner trained in Nepal and Reiki Level 2 practitioner in East London. Sound healing, energy healing and breathwork, offered live.",
+    offerings: "Group sound baths, 1:1 sound healing sessions, corporate wellness sessions for teams of up to " + RATES.corporateCap + ", and ceremonies for weddings, namings and memorials. Travel included.",
+    moon: "Eight sound sessions following the lunar month, each shaped by the phase of the moon.",
+    voice: "Recordings from live sound healing sessions with Tibetan singing bowls and voice.",
+    events: "Past sound healing events in London and how to hear about new dates — reiki, family constellations and sound baths.",
+    corporate: "Ask about a team wellness session, a private ceremony or a 1:1 sound healing session. Replies within two working days.",
+    faq: "What happens in a sound healing session, who it is safe for, what to do afterwards, corporate bookings, cost and cancellations.",
+    privacy: "How Wavesbychin uses the details you send through this site, and your rights under UK data protection law."
+  };
+
+  // Build-time hook: scripts/build-pages.mjs runs this file in a sandbox that defines
+  // WBC_PRERENDER, takes the render functions, and stops before anything touches the DOM.
+  if (typeof window.WBC_PRERENDER === "function") {
+    window.WBC_PRERENDER({ PAGES: PAGES, TITLES: TITLES, DESCRIPTIONS: DESCRIPTIONS, ROUTES: ROUTES, PATHS: PATHS, FAQ: FAQ, PHOTOS: PHOTOS, EMAIL: EMAIL, href: href });
+    return;
+  }
 
   // ---------- rendering ----------
 
@@ -504,30 +530,23 @@
     }
   }
 
-  function navigate(page, opts) {
-    opts = opts || {};
-    if (!PAGES[page]) page = "about";
-    var changed = page !== state.page;
-    state.page = page;
-    render();
-    if (changed || opts.force) {
-      app.classList.remove("is-entering");
-      void app.offsetWidth; // restart the enter animation
-      app.classList.add("is-entering");
-    }
-    window.scrollTo(0, 0);
-    track("page_view", { page_title: document.title, page_location: location.origin + location.pathname + "#/" + PATHS[page], page_path: "/" + PATHS[page] });
-  }
+  function url(page, query) { return new URL(href(page) + (query || ""), document.baseURI).href; }
 
-  function pageFromHash() {
+  // Old links shared before real URLs existed (…/#/offerings) → the page's own URL.
+  // Returns true when it has redirected, so boot stops.
+  function redirectLegacyHash() {
     var h = (location.hash || "").replace(/^#\/?/, "").split("?")[0];
-    return ROUTES[h] || (h ? null : "about");
+    if (!h) return false;
+    var page = ROUTES[h];
+    if (!page) return false; // an ordinary in-page anchor, leave it alone
+    if (page === state.page) { history.replaceState(null, "", location.pathname + location.search); return false; }
+    location.replace(url(page));
+    return true;
   }
 
-  function onHashChange() {
-    var page = pageFromHash();
-    if (!page) { location.replace("#/about"); return; }
-    navigate(page, { force: true });
+  // GA page_path stays "/about", "/offerings", … so reports carry on from the hash-route era.
+  function trackPageView() {
+    track("page_view", { page_title: document.title, page_location: location.origin + location.pathname, page_path: "/" + PATHS[state.page] });
   }
 
   // ---------- backend ----------
@@ -595,12 +614,8 @@
     var t = e.target.closest("[data-action], [data-nav]");
     if (!t) return;
 
-    var nav = t.getAttribute("data-nav");
-    if (nav) {
-      // Plain hash link; hashchange does the rest — unless it is the page we are already on.
-      if (t.getAttribute("href") === location.hash) { e.preventDefault(); navigate(ROUTES[nav] || nav, { force: true }); }
-      return;
-    }
+    // data-nav links are ordinary links to real pages; the browser handles them.
+    if (t.hasAttribute("data-nav")) return;
 
     var action = t.getAttribute("data-action");
     if (action === "faq") {
@@ -613,7 +628,7 @@
       render();
     } else if (action === "corporate-inquiry") {
       state.form.type = "corporate";
-      if (state.page === "corporate") navigate("corporate"); else location.hash = "#/message";
+      if (state.page === "corporate") render(); else location.href = url("corporate", "?type=corporate");
     } else if (action === "reset-form") {
       state.sent = false;
       state.form = emptyForm();
@@ -705,7 +720,15 @@
     else document.getElementById("cookie").hidden = false;
   }
 
-  window.addEventListener("hashchange", onHashChange);
-  onHashChange();
+  // Which page this is comes from the HTML the build wrote (<body data-page="…">).
+  var bodyPage = document.body.getAttribute("data-page");
+  state.page = PAGES[bodyPage] ? bodyPage : "about";
+  if (redirectLegacyHash()) return;
+  if (state.page === "corporate" && new URLSearchParams(location.search).get("type") === "corporate") state.form.type = "corporate";
+
+  // Re-render over the pre-rendered HTML so visitors always get the current copy and state,
+  // even if the build was not re-run after an edit.
+  render();
+  trackPageView();
   onScroll();
 })();

@@ -1,7 +1,8 @@
 # Wavesbychin — sound healing site
 
 Marketing site for Wavesbychin, Vivi's East London sound healing, energy healing and breathwork practice.
-Static: one HTML shell, one stylesheet, one script. No build step, no dependencies, no framework.
+Static, no dependencies, no framework. One page template, one stylesheet, one script, plus a
+small Node script that pre-renders a real HTML file per page (for search engines — see below).
 Built from `~/Downloads/design_handoff_wavesbychin_site` (the design source of truth — tokens,
 copy and interactions all come from its README and `Wavesbychin.dc.html`).
 
@@ -17,16 +18,39 @@ plan). Every push to `main` redeploys in about a minute.
 ./serve.sh          # http://localhost:8798
 ```
 
-Or open `index.html` directly — everything is relative, so it works from `file://` too
-(the Google Fonts request is the only network call).
+Use the server rather than `file://`: pages are folders (`offerings/index.html`), and only a
+server turns `offerings/` into that file.
+
+## After changing any copy — rebuild
+
+```bash
+node scripts/build-pages.mjs          # regenerates index.html, */index.html, sitemap.xml, robots.txt
+node scripts/build-pages.mjs --check  # exits 1 if any of them is stale; run before pushing
+```
+
+Copy lives in `app.js`; the header, footer and `<head>` live in `template.html`. The build runs
+`app.js`'s render functions in a sandbox and writes each page's HTML with its own `<title>`,
+meta description, canonical URL and Open Graph tags, plus JSON-LD (`LocalBusiness` on the
+home pages, `FAQPage` on the FAQ, breadcrumbs elsewhere). **Never edit a generated
+`index.html` by hand** — the next build overwrites it.
+
+If you forget to rebuild, visitors still see the new copy (the browser re-renders from
+`app.js`), but search engines see the old text until you rebuild.
+
+When the site gets its own domain: `node scripts/build-pages.mjs --base https://<domain>`
+(or change the default `ORIGIN` in the script) so the canonical URLs and sitemap point there.
+`robots.txt` only works at a domain root, so it does nothing until then.
 
 ## Files
 
 | File | What it is |
 |---|---|
-| `index.html` | Shell: `<head>`, sticky header, empty `<main id="app">`, footer, cookie banner |
+| `template.html` | Shell for every page: `<head>`, sticky header, `<main id="app">`, footer, cookie banner |
+| `index.html`, `*/index.html` | **Generated** pages, one per route (root = About) |
+| `sitemap.xml`, `robots.txt` | **Generated** |
+| `scripts/build-pages.mjs` | The generator (see above) |
 | `styles.css` | Design tokens as CSS custom properties on `:root`, then one class per component |
-| `app.js` | Page content (timeline, FAQ, moon phases), hash router, form handling, header collapse |
+| `app.js` | Page content, per-page titles/descriptions, form handling, header collapse |
 | `config.js` | Supabase URL + anon key, GA measurement ID, Innerwave / Instagram / email links |
 | `supabase/inquiries.sql` | Table + insert-only RLS policy for the forms — run once in the dashboard |
 | `assets/` | Logo, cover photo, portrait, four past-event photos |
@@ -34,18 +58,20 @@ Or open `index.html` directly — everything is relative, so it works from `file
 
 ## Pages
 
-Routes live in the URL hash so every page is linkable and the back button works.
+Each page is a real URL. Until 2026-11-12 they were `#/` hash routes, which Google treats as
+one page. Old `…/#/offerings` links still work: `app.js` redirects them to the new URL.
 
-| Hash | Page | In nav? |
+| Path | Page | In nav? |
 |---|---|---|
-| `#/about` (default) | About me — hero, portrait, story, timeline, how I work | yes |
-| `#/offerings` | What I offer — four offering cards | yes |
-| `#/events` | What's on — newsletter box, past events, photo collage | yes |
-| `#/faq` | FAQ — five groups, single-open accordion | yes |
-| `#/message` | Send a message — general / corporate form | header button |
-| `#/home` | Home — banner, hero, Innerwave card, moon band | logo click |
-| `#/moon` | Moon Phase Rituals — tonight's phase + eight ritual cards | from Home / Offerings |
-| `#/voice` | Voice & Video — embed and audio placeholders | from Home / FAQ |
+| `./` (site root) | About me — hero, portrait, story, timeline, how I work | yes |
+| `offerings/` | What I offer — four offering cards | yes |
+| `events/` | What's on — newsletter box, past events, photo collage | yes |
+| `faq/` | FAQ — five groups, single-open accordion | yes |
+| `message/` | Send a message — general / corporate form (`?type=corporate` preselects corporate) | header button |
+| `home/` | Home — banner, hero, Innerwave card, moon band | logo click |
+| `privacy/` | Privacy notice | footer |
+| `voice/` | Voice & Video — placeholders, `noindex`, not in the sitemap | not linked |
+| `moon/` | Moon Phase Rituals — not built while `SHOW_MOON` is false | — |
 
 ## Changing things
 
@@ -79,7 +105,7 @@ Telegram via `pg_net`, with the bot token and chat id held in Supabase Vault (fi
 inside the SQL editor only — this repo is public). It is capped at 10 alerts per ten
 minutes and never blocks the insert. Run it once after `inquiries.sql`. The key in `config.js` is the **anon** key; never put `service_role` there.
 
-Rows carry `kind` (`message` | `subscribe`), the form fields, `page` (the hash route it was
+Rows carry `kind` (`message` | `subscribe`), the form fields, `page` (the page it was
 sent from) and `source = 'wavesbychin-site'`.
 
 ## Analytics → Google Analytics 4
@@ -94,8 +120,9 @@ Same pattern as `~/maria-site/analytics.js`, written up there in full. In short:
   would be theatre). **Accept** → `consent update analytics_storage: granted`; **Decline**
   leaves it denied. The choice lives in `localStorage` under `wbc-cookie` and is re-applied
   on every visit.
-- Because routing is hash-based, `navigate()` sends a `page_view` per route with
-  `page_path` like `/about`, `/offerings`, `/message`. GA's own automatic page view is off.
+- Each page load sends one `page_view` with `page_path` like `/about`, `/offerings`,
+  `/message` (unchanged from the hash-route era, so reports stay continuous). GA's own
+  automatic page view is off.
 - Custom events: `message_sent` / `message_failed` (with `inquiry_type`), `subscribe` /
   `subscribe_failed`.
 
