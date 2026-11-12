@@ -19,7 +19,7 @@ const args = process.argv.slice(2);
 const CHECK = args.includes("--check");
 const baseIdx = args.indexOf("--base");
 // Canonical origin. Change with --base (or here) when the site moves to its own domain.
-const ORIGIN = (baseIdx >= 0 ? args[baseIdx + 1] : "https://aibotvivi.github.io/wavesbychin-site").replace(/\/+$/, "");
+const ORIGIN = (baseIdx >= 0 ? args[baseIdx + 1] : "https://wavesbychin.com").replace(/\/+$/, "");
 if (!/^https:\/\/[^\s]+$/.test(ORIGIN)) { console.error("--base must be an https:// URL"); process.exit(2); }
 
 // Pages that exist but should stay out of search: placeholder content, not linked from nav.

@@ -8,9 +8,18 @@ copy and interactions all come from its README and `Wavesbychin.dc.html`).
 
 ## Live
 
-https://aibotvivi.github.io/wavesbychin-site/ — GitHub Pages from the `main` branch root of
+https://wavesbychin.com (since 2026-11-12) — GitHub Pages from the `main` branch root of
 `aibotvivi/wavesbychin-site` (public; a private repo would take the site down on the Free
-plan). Every push to `main` redeploys in about a minute.
+plan). Every push to `main` redeploys in about a minute. The old address
+https://aibotvivi.github.io/wavesbychin-site/ redirects here.
+
+**Domain:** registered at IONOS (bought 2026-11-12). The `CNAME` file in this repo tells Pages
+which domain to serve — deleting it, or clearing the box in repo Settings → Pages, takes the
+domain off and the github.io address back. DNS at IONOS: four `A` + four `AAAA` records on
+`@` and on `www` pointing at GitHub Pages (185.199.108–111.153, 2606:50c0:8000–8003::153);
+MX records are IONOS mail, leave them. **Order matters:** DNS must point at GitHub before the
+domain is entered in Pages, because Pages starts redirecting the github.io address at once —
+entering it first took the site down for a few minutes on 2026-11-12.
 
 ## Run it locally
 
@@ -41,9 +50,8 @@ redeploys). So an edit made in GitHub's web editor or by another AI tool is comp
 Check a run under the repo's **Actions** tab. Pull before editing locally afterwards
 (`git pull`), since the bot may have added a commit.
 
-When the site gets its own domain: `node scripts/build-pages.mjs --base https://<domain>`
-(or change the default `ORIGIN` in the script) so the canonical URLs and sitemap point there.
-`robots.txt` only works at a domain root, so it does nothing until then.
+The canonical origin is `https://wavesbychin.com`, the default `ORIGIN` in the script (the
+Action uses it too). Change it there if the domain ever changes.
 
 ## Files
 
